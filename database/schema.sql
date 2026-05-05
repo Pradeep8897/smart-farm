@@ -1,0 +1,45 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(80) UNIQUE NOT NULL,
+    email VARCHAR(120) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS crops (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(80) NOT NULL,
+    season VARCHAR(80),
+    soil_type VARCHAR(80)
+);
+
+CREATE TABLE IF NOT EXISTS market_prices (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    crop_name VARCHAR(80) NOT NULL,
+    price FLOAT NOT NULL,
+    date DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS marketplace_products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    seller_id INTEGER NOT NULL,
+    title VARCHAR(120) NOT NULL,
+    description TEXT,
+    price FLOAT NOT NULL,
+    FOREIGN KEY(seller_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS equipment_rentals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INTEGER NOT NULL,
+    equipment_name VARCHAR(120) NOT NULL,
+    rate_per_day FLOAT NOT NULL,
+    available BOOLEAN DEFAULT 1,
+    FOREIGN KEY(owner_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS mandis (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(120) NOT NULL,
+    location VARCHAR(120) NOT NULL,
+    distance_km FLOAT NOT NULL
+);
